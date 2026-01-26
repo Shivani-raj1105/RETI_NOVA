@@ -7,18 +7,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
-# Try to import your wrapper. If it fails, app will still start but endpoint will raise clear error.
+
 try:
     from retinova_cli import RetiNovaCLI as WrapperClass
 except Exception as e:
     WrapperClass = None    
     wrapper_import_error = e
 
-# ----- logging -----
+
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("retina_app")
 
-# ----- load env -----
+
 load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -31,10 +31,10 @@ MODEL_OBJECT_PATH = os.getenv("MODEL_OBJECT_PATH", "retinova_model.h5")
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise RuntimeError("SUPABASE_URL or SUPABASE_KEY missing in .env")
 
-# Create supabase client (server side)
+
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# ----- FastAPI app -----
+
 app = FastAPI(title="Retina (7-disease) API")
 app.add_middleware(
     CORSMiddleware,
@@ -44,13 +44,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ----- local folders -----
+
 UPLOAD_FOLDER = "uploads"
 MODEL_FOLDER = "model"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(MODEL_FOLDER, exist_ok=True)
 
-# ----- helper wrappers for supabase responses -----
+
 def _raise_if_response_error(resp, context=""):
     if getattr(resp, "error", None):
         raise RuntimeError(f"{context} error: {resp.error}")
@@ -82,11 +82,10 @@ def _get_inserted_id(inserted_rows, preferred_names=("id","image_id","retina_id"
     # fallback to first column
     return next(iter(row.values()))
 
-# ----- load local model directly -----
-# ----- local model path -----
+
 LOCAL_MODEL_PATH = os.path.join(MODEL_FOLDER, "retinova_model.h5")
 
-# ----- lazy pipeline loader -----
+
 pipeline = None
 
 def get_pipeline():
@@ -115,26 +114,22 @@ def get_pipeline():
 async def hello():
     return {"msg": "hello"}
 
-# ----- main endpoint -----
-# ----- main endpoint -----
 @app.post("/upload-and-process")
 async def upload_and_process(
     file: UploadFile = File(...),
     user_email: str = Form(...),
     user_id: str = Form(None)
 ):
-    # Basic MIME validation
+
     if file.content_type not in ("image/jpeg", "image/png"):
         raise HTTPException(status_code=400, detail="Only JPEG/PNG images allowed.")
 
-    # Ensure pipeline available (lazy init)
     try:
         pipeline_instance = get_pipeline()
     except Exception as e:
         log.exception("Pipeline initialization failed: %s", e)
         raise HTTPException(status_code=500, detail=f"Model pipeline error: {e}")
 
-    # Save input file locally
     ext = file.filename.split(".")[-1]
     local_input_name = f"{uuid.uuid4()}.{ext}"
     local_input_path = os.path.join(UPLOAD_FOLDER, local_input_name)
@@ -144,12 +139,12 @@ async def upload_and_process(
     log.info("Saved input image to %s", local_input_path)
 
     try:
-        # Run wrapper (must return dict described below)
+
         log.info("Running wrapper on %s", local_input_path)
         wrapper_result = pipeline_instance.run_with_path(local_input_path)
         log.debug("Wrapper result: %s", {k: type(v) for k, v in wrapper_result.items()})
 
-        # Upload original image to user-images bucket (private)
+
         bucket_image_name = f"{uuid.uuid4()}.{ext}"
         _upload_bytes_to_bucket(
             BUCKET_USER_IMAGES,
@@ -161,11 +156,10 @@ async def upload_and_process(
             BUCKET_USER_IMAGES, bucket_image_name, expires_sec=24 * 3600
         )
 
-        # Upload GradCAM and Heatmap if wrapper provided local paths
+ 
         gradcam_signed = None
         heatmap_signed = None
 
-        # Accept multiple possible key names from wrapper
         grad_path = wrapper_result.get("gradcam_path") or wrapper_result.get(
             "gradcam_overlay_path"
         )
@@ -173,7 +167,7 @@ async def upload_and_process(
             "heatmap_image_path"
         )
 
-        # Normalize paths to absolute if necessary
+
         if grad_path and not os.path.isabs(grad_path):
             grad_path = os.path.join(os.getcwd(), grad_path)
         if heat_path and not os.path.isabs(heat_path):
@@ -207,7 +201,6 @@ async def upload_and_process(
         else:
             log.info("No heatmap produced or file missing: %s", heat_path)
 
-        # Insert retina_images row
         retina_payload = {
             "user_id": user_id,
             "user_email": user_email,
@@ -230,7 +223,7 @@ async def upload_and_process(
         }
         _insert_table("predictions", prediction_payload)
 
-        # Insert results row
+
         results_payload = {
             "image_id": image_id,
             "user_id": user_id,
@@ -240,7 +233,7 @@ async def upload_and_process(
         }
         _insert_table("results", results_payload)
 
-        # Insert MCQ responses if present
+
         mcq_list = wrapper_result.get("mcq_questions") or wrapper_result.get(
             "mcq_responses"
         ) or []
@@ -255,7 +248,6 @@ async def upload_and_process(
             }
             _insert_table("mcq_responses", mcq_payload)
 
-        # Build response
         return {
             "message": "Processed successfully",
             "image_id": image_id,
