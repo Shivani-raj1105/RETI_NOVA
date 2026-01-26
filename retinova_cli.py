@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 RetiNova CLI — terminal-only wrapper that:
  - auto-uses default model (models/retinova_model.h5)
