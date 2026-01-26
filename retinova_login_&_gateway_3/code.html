@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Register for RetiNova</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "medical-blue": {
+                            DEFAULT: "#0B3C5D",
+                            soft: "#23557a",
+                            pale: "#eef4f8"
+                        },
+                        "sage": {
+                            DEFAULT: "#8da399",
+                            light: "#eaf1ee",
+                            dark: "#5c7068"
+                        },
+                        "off-white": "#f8f9fa",
+                        "surface-border": "#e2e8f0",
+                        "text-main": "#0f172a",
+                        "text-muted": "#64748b",
+                        "alert": "#d97706",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(11, 60, 93, 0.08)',
+                        'glow': '0 0 20px rgba(141, 163, 153, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Spline Sans", sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f9fa; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        #register-tab:checked ~ #login-form { display: none; }
+        #register-tab:checked ~ #register-form { display: flex; }
+        #login-tab:checked ~ #register-form { display: none; }
+        #login-tab:checked ~ #login-form { display: flex; }
+        .tab-label {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        #login-tab:checked ~ .tab-switcher label[for="login-tab"],
+        #register-tab:checked ~ .tab-switcher label[for="register-tab"] {
+            background-color: #0B3C5D;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-off-white text-slate-800 antialiased overflow-x-hidden selection:bg-medical-blue selection:text-white">
+    <div class="flex flex-col min-h-screen">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-surface-border px-6 py-4 lg:px-10 z-20 bg-white/80 backdrop-blur-md sticky top-0">
+            <div class="flex items-center gap-3">
+                <div class="size-8 text-medical-blue">
+                    <span class="material-symbols-outlined text-3xl">visibility</span>
+                </div>
+                <h2 class="text-medical-blue text-xl font-bold leading-tight tracking-tight">RetiNova</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-2 text-xs font-medium text-text-muted bg-sage-light px-3 py-1.5 rounded-full border border-surface-border">
+                    <span class="w-2 h-2 rounded-full bg-sage animate-pulse"></span>
+                    System Operational
+                </div>
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-white hover:bg-off-white text-medical-blue border border-surface-border transition-colors text-sm font-bold leading-normal" onclick="showContactSupport()">
+                    <span class="truncate">Contact Support</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex-1 flex flex-col lg:flex-row relative">
+            <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-medical-blue/5 rounded-full blur-[120px]"></div>
+                <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-sage/10 rounded-full blur-[100px]"></div>
+            </div>
+            <div class="layout-container flex w-full h-full z-10">
+                <div class="w-full flex flex-col lg:flex-row h-full">
+                    <div class="flex-1 flex items-center justify-center p-6 lg:p-20 relative">
+                        <div class="max-w-xl w-full flex flex-col gap-8">
+                            <div class="space-y-6">
+                                <h1 class="text-medical-blue text-4xl lg:text-6xl font-black leading-tight tracking-tight">
+                                    Your retina knows more than <span class="text-transparent bg-clip-text bg-gradient-to-r from-medical-blue to-sage">you think.</span>
+                                </h1>
+                                <p class="text-text-muted text-lg lg:text-xl font-light leading-relaxed max-w-lg">
+                                    RetiNova is an AI platform that converts a single retinal image into early, actionable insight on eye and systemic disease. It enables fast, non-invasive screening at clinical scale.
+                                </p>
+                            </div>
+                            <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-surface-border shadow-2xl shadow-medical-blue/10 group bg-slate-100">
+                                <div class="absolute inset-0 bg-medical-blue/80 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-[2px]">
+                                    <span class="text-white font-mono text-xs tracking-widest">ANALYZING RETINAL STRUCTURE...</span>
+                                </div>
+                                <div class="w-full h-full bg-cover bg-center opacity-90 mix-blend-multiply" data-alt="Abstract visualization of retinal blood vessels and neural networks in subdued blue wireframe style" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB4IUmN-cKD6ubDchWZ1jzo7UVNK2hWhBbMsDWZhTQ0KEDoKfhMwHNPRmTa4dsy3XxR0ijYOOb5VamQBV1dvNjIk9RbJLznkPB0ORPtSHid7ivoJymrj4uWF9IwJkfrmht0TH5mSlK6IFh5J6D1lwAt3V8Tv2V1amcNm_IH4kNTPORjAjSPoSeIJEFDp6dvkiO4eRcXdx921DxVXzJCPSohoTrwkJuFiNYnRi5IiqtcI4L3nxIKltQTgZrUrZQEizCEkmUCf4i7bnHv"); filter: grayscale(0.6) hue-rotate(200deg) contrast(1.1) brightness(1.1);'>
+                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-40"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 lg:max-w-md bg-white border-l border-surface-border flex flex-col justify-center p-8 lg:p-12 shadow-soft z-20">
+                        <div class="w-full max-w-sm mx-auto flex flex-col gap-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-medical-blue mb-2">Create Account</h3>
+                                <p class="text-text-muted text-sm">Start your journey with RetiNova.</p>
+                            </div>
+                            <input class="hidden" id="login-tab" name="auth-tab" type="radio"/>
+                            <input checked="" class="hidden" id="register-tab" name="auth-tab" type="radio"/>
+                            <div class="bg-slate-100 p-1 rounded-full border border-surface-border flex relative tab-switcher">
+                                <label class="tab-label flex-1 py-2.5 px-4 rounded-full text-sm font-bold text-text-muted hover:text-medical-blue text-center" for="login-tab" onclick="smoothNavigateTo('login')">
+                                    Sign In
+                                </label>
+                                <label class="tab-label flex-1 py-2.5 px-4 rounded-full text-sm font-bold text-text-muted hover:text-medical-blue text-center" for="register-tab">
+                                    Register
+                                </label>
+                            </div>
+                            <form class="hidden flex-col gap-5" id="login-form">
+                                <div class="space-y-4">
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-sm font-semibold text-slate-700 ml-2">Gmail ID</span>
+                                        <div class="relative group">
+                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-medical-blue transition-colors">
+                                                <span class="material-symbols-outlined">mail</span>
+                                            </div>
+                                            <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block pl-11 pr-4 py-3.5 placeholder-slate-400 transition-all shadow-inner" placeholder="example@gmail.com" type="email"/>
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <div class="flex justify-between items-center ml-2">
+                                            <span class="text-sm font-semibold text-slate-700">Password</span>
+                                            <a class="text-xs text-medical-blue hover:text-medical-blue-soft font-medium" href="#">Forgot password?</a>
+                                        </div>
+                                        <div class="relative group">
+                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-medical-blue transition-colors">
+                                                <span class="material-symbols-outlined">key</span>
+                                            </div>
+                                            <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block pl-11 pr-4 py-3.5 placeholder-slate-400 transition-all shadow-inner" placeholder="••••••••••••" type="password"/>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="pt-2">
+                                    <button class="w-full flex items-center justify-center gap-2 bg-medical-blue hover:bg-medical-blue-soft text-white font-bold py-3.5 px-6 rounded-full transition-all transform active:scale-[0.98] shadow-lg shadow-medical-blue/20 hover:shadow-xl hover:shadow-medical-blue/30" type="button" onclick="smoothNavigateTo('login')">
+                                        <span>Sign In</span>
+                                        <span class="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </form>
+                            <form class="flex flex-col gap-4" id="register-form">
+                                <label class="flex flex-col gap-1.5">
+                                    <span class="text-xs font-semibold text-slate-700 ml-2">Email ID</span>
+                                    <div class="relative group">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-medical-blue transition-colors">
+                                            <span class="material-symbols-outlined text-lg">mail</span>
+                                        </div>
+                                        <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block pl-10 pr-4 py-2.5 placeholder-slate-400 transition-all shadow-inner" placeholder="email@example.com" type="email"/>
+                                    </div>
+                                </label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="flex flex-col gap-1.5">
+                                        <span class="text-xs font-semibold text-slate-700 ml-2">New Password</span>
+                                        <div class="relative group">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-medical-blue transition-colors">
+                                                <span class="material-symbols-outlined text-lg">lock</span>
+                                            </div>
+                                            <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block pl-10 pr-4 py-2.5 placeholder-slate-400 transition-all shadow-inner" placeholder="••••••" type="password"/>
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-1.5">
+                                        <span class="text-xs font-semibold text-slate-700 ml-2">Confirm</span>
+                                        <div class="relative group">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-medical-blue transition-colors">
+                                                <span class="material-symbols-outlined text-lg">check_circle</span>
+                                            </div>
+                                            <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block pl-10 pr-4 py-2.5 placeholder-slate-400 transition-all shadow-inner" placeholder="••••••" type="password"/>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="flex flex-col gap-1.5">
+                                        <span class="text-xs font-semibold text-slate-700 ml-2">Age</span>
+                                        <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block px-4 py-2.5 placeholder-slate-400 transition-all shadow-inner" placeholder="Years" type="number"/>
+                                    </label>
+                                    <label class="flex flex-col gap-1.5">
+                                        <span class="text-xs font-semibold text-slate-700 ml-2">Gender</span>
+                                        <select class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block px-4 py-2.5 transition-all shadow-inner">
+                                            <option disabled="" selected="" value="">Select</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <label class="flex flex-col gap-1.5">
+                                    <span class="text-xs font-semibold text-slate-700 ml-2">Country</span>
+                                    <select class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block px-4 py-2.5 transition-all shadow-inner" id="countrySelect" onchange="updateCountryCode()">
+                                        <option disabled="" selected="" value="">Select Country</option>
+                                        <option value="US" data-dial="+1">United States</option>
+                                        <option value="GB" data-dial="+44">United Kingdom</option>
+                                        <option value="CA" data-dial="+1">Canada</option>
+                                        <option value="AU" data-dial="+61">Australia</option>
+                                        <option value="DE" data-dial="+49">Germany</option>
+                                        <option value="FR" data-dial="+33">France</option>
+                                        <option value="JP" data-dial="+81">Japan</option>
+                                        <option value="IN" data-dial="+91">India</option>
+                                        <option value="BR" data-dial="+55">Brazil</option>
+                                        <option value="ZA" data-dial="+27">South Africa</option>
+                                        <option value="CN" data-dial="+86">China</option>
+                                        <option value="KR" data-dial="+82">South Korea</option>
+                                        <option value="MX" data-dial="+52">Mexico</option>
+                                        <option value="IT" data-dial="+39">Italy</option>
+                                        <option value="ES" data-dial="+34">Spain</option>
+                                    </select>
+                                </label>
+                                <label class="flex flex-col gap-1.5">
+                                    <span class="text-xs font-semibold text-slate-700 ml-2">Number</span>
+                                    <div class="relative group">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-medical-blue transition-colors">
+                                            <span class="material-symbols-outlined text-lg">call</span>
+                                            <span class="ml-1 text-sm font-bold" id="dialCodeDisplay">+1</span>
+                                        </div>
+                                        <input class="w-full bg-slate-50 border border-surface-border text-slate-900 text-sm rounded-full focus:ring-2 focus:ring-medical-blue/20 focus:border-medical-blue block pl-14 pr-4 py-2.5 placeholder-slate-400 transition-all shadow-inner" placeholder="(555) 000-0000" type="tel" id="phoneNumber"/>
+                                    </div>
+                                </label>
+                                <div class="pt-2">
+                                    <button class="w-full flex items-center justify-center gap-2 bg-medical-blue hover:bg-medical-blue-soft text-white font-bold py-3 px-6 rounded-full transition-all transform active:scale-[0.98] shadow-lg shadow-medical-blue/20 hover:shadow-xl hover:shadow-medical-blue/30" type="button" onclick="register()">
+                                        <span>Create Account</span>
+                                        <span class="material-symbols-outlined text-sm font-bold">person_add</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Client-side navigation with smooth transition
+        function navigateTo(page) {
+            window.location.href = `/${page}`;
+        }
+        
+        function smoothNavigateTo(page) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease-in-out';
+            
+            setTimeout(() => {
+                window.location.href = `/${page}`;
+            }, 300);
+        }
+
+        // Login functionality
+        function login() {
+            const email = document.querySelector('#login-form input[type="email"]').value;
+            const password = document.querySelector('#login-form input[type="password"]').value;
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid Gmail ID (e.g., user@gmail.com)');
+                return;
+            }
+
+            if (!email || !password) {
+                alert('Please enter both email and password');
+                return;
+            }
+
+            console.log('Login attempt with:', { email, password });
+            
+            setTimeout(() => {
+                navigateTo('dashboard');
+            }, 500);
+        }
+
+        // Register functionality
+        function register() {
+            const email = document.querySelector('#register-form input[type="email"]').value;
+            const password = document.querySelector('#register-form input[type="password"]').value;
+            const confirmPassword = document.querySelectorAll('#register-form input[type="password"]')[1].value;
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            if (!email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            console.log('Registration attempt with:', { email, password });
+            
+            setTimeout(() => {
+                navigateTo('dashboard');
+            }, 500);
+        }
+
+        // Handle form submission with Enter key
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                if (document.getElementById('login-tab').checked) {
+                    login();
+                } else {
+                    register();
+                }
+            }
+        });
+
+        // Update dial code when country changes
+        function updateCountryCode() {
+            const countrySelect = document.getElementById('countrySelect');
+            const dialCodeDisplay = document.getElementById('dialCodeDisplay');
+            const phoneNumberInput = document.getElementById('phoneNumber');
+            
+            if (countrySelect.value) {
+                const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+                const dialCode = selectedOption.getAttribute('data-dial');
+                dialCodeDisplay.textContent = dialCode;
+                
+                phoneNumberInput.classList.remove('pl-10', 'pl-11', 'pl-12', 'pl-14');
+                const paddingClass = dialCode.length > 3 ? 'pl-14' : 'pl-12';
+                phoneNumberInput.classList.add(paddingClass);
+            }
+        }
+
+        // Initialize with US as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const countrySelect = document.getElementById('countrySelect');
+            if (countrySelect) {
+                countrySelect.value = 'US';
+                updateCountryCode();
+            }
+        });
+
+        // Contact support functionality
+        function showContactSupport() {
+            const supportOptions = [
+                "Email: support@retinova.com",
+                "Phone: +1 (800) 123-4567",
+                "Hours: Mon-Fri, 9AM-5PM EST"
+            ];
+            
+            alert("Contact Support:\n\n" + supportOptions.join("\n") + "\n\nWe'll get back to you within 24 hours.");
+        }
+    </script>
+</body>
+</html>

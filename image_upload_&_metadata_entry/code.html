@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RetiNova - Upload & Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#1763cf", "background-light": "#f6f7f8", "background-dark": "#111821", "surface-dark": "#1e293b", "border-dark": "#334155", "text-secondary": "#94a3b8"}, fontFamily: {display: "Manrope"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white h-screen flex flex-col overflow-hidden selection:bg-primary selection:text-white">
+    <header class="flex-none items-center justify-between whitespace-nowrap border-b border-solid border-border-dark px-6 py-3 bg-background-dark/80 backdrop-blur-md z-20">
+        <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-4 text-white">
+                <div class="size-8 text-primary">
+                    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
+                        <path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">RetiNova</h2>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="group flex cursor-pointer items-center justify-center overflow-hidden rounded-full size-10 bg-surface-dark hover:bg-border-dark text-white transition-colors duration-200 border border-transparent hover:border-border-dark/50" onclick="navigateTo('dashboard')">
+                    <span class="material-symbols-outlined group-hover:text-primary transition-colors text-[24px]">home</span>
+                </button>
+                <button class="group flex cursor-pointer items-center justify-center overflow-hidden rounded-full size-10 bg-surface-dark hover:bg-border-dark text-white transition-colors duration-200 border border-transparent hover:border-border-dark/50">
+                    <span class="material-symbols-outlined group-hover:text-primary transition-colors text-[24px]">settings</span>
+                </button>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-bold text-white leading-none">User</p>
+                        <p class="text-xs text-text-secondary leading-none mt-1">Ophthalmology</p>
+                    </div>
+                    <div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-border-dark" data-alt="Doctor profile picture, professional headshot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtL2-d8qSlXqFt2OD_izk63WB_oCTXeEdWpJ1DiA3iup3_dS1QeI78aU2-UY1cbSTKOUXsbIg5VydZzGU8iqrepl7eIo0X9JcxeETT8b-DX1zo-EYlsq12ADrK16lyx-pgFM9dHWr4mXleKePQq6pSfTastdnyXdBfi7YtIEYLQlpjCJIDQTvOv5_U5B0K-3-E11tmTLZsYZ2meoK7tz9bUnFYkg4lBgzcSZNB3xkCni_X4NZCEnCDbyZjmhw3YowAtVqaaOZksQJL");'></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="flex flex-1 relative overflow-hidden">
+        <div class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative">
+            <div class="w-full max-w-[1400px] mx-auto p-6 lg:p-10 flex flex-col gap-8">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-2">
+                        <a class="text-text-secondary text-sm hover:text-white transition-colors flex items-center gap-1" href="#" onclick="navigateTo('dashboard')">
+                            <span class="material-symbols-outlined text-[18px]">home</span>
+                            Dashboard
+                        </a>
+                        <span class="text-border-dark text-sm">/</span>
+                        <span class="text-white text-sm font-medium">New Scan</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <h1 class="text-primary text-4xl font-semibold leading-tight tracking-[-0.02em]">New Analysis Session</h1>
+                        <p class="text-text-secondary text-base max-w-2xl">Upload high-resolution fundus photography for automated risk assessment. Supports JPEG and PNG.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 grow">
+                    <div class="flex flex-col rounded-2xl bg-surface-dark border border-border-dark overflow-hidden group/card hover:border-primary/50 transition-colors duration-300 shadow-lg shadow-black/20">
+                        <div class="px-6 py-4 border-b border-border-dark flex justify-between items-center bg-black/20">
+                            <div class="flex items-center gap-2">
+                                <span class="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></span>
+                                <span class="text-white font-bold tracking-wide text-sm uppercase">Left Eye (OS)</span>
+                            </div>
+                            <span class="material-symbols-outlined text-text-secondary text-[20px]">visibility</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-center p-8 relative min-h-[320px]">
+                            <div class="absolute inset-4 border-2 border-dashed border-border-dark rounded-xl flex flex-col items-center justify-center gap-4 bg-background-dark/30 group-hover/card:bg-background-dark/50 group-hover/card:border-primary/30 transition-all duration-300 cursor-pointer">
+                                <div class="size-16 rounded-full bg-surface-dark border border-border-dark flex items-center justify-center mb-2 group-hover/card:scale-110 transition-transform duration-300 group-hover/card:border-primary/30">
+                                    <span class="material-symbols-outlined text-text-secondary text-[32px] group-hover/card:text-primary transition-colors">add_a_photo</span>
+                                </div>
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium mb-1">Drop OS fundus image here</p>
+                                    <p class="text-text-secondary text-sm">or click to browse files</p>
+                                </div>
+                                <button class="mt-2 px-6 py-2 bg-surface-dark border border-border-dark hover:bg-primary hover:text-white hover:border-primary text-text-secondary text-sm font-bold rounded-full transition-all duration-200" onclick="document.getElementById('leftEyeInput').click()">
+                                    Select File
+                                </button>
+                                <input type="file" id="leftEyeInput" class="hidden" accept="image/jpeg,image/png" onchange="handleFileSelect(event, 'left')">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col rounded-2xl bg-surface-dark border border-border-dark overflow-hidden group/card hover:border-rose-500/50 transition-colors duration-300 shadow-lg shadow-black/20">
+                        <div class="px-6 py-4 border-b border-border-dark flex justify-between items-center bg-black/20">
+                            <div class="flex items-center gap-2">
+                                <span class="size-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]"></span>
+                                <span class="text-white font-bold tracking-wide text-sm uppercase">Right Eye (OD)</span>
+                            </div>
+                            <span class="material-symbols-outlined text-text-secondary text-[20px]">visibility</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-center p-8 relative min-h-[320px]">
+                            <div class="absolute inset-4 border-2 border-dashed border-border-dark rounded-xl flex flex-col items-center justify-center gap-4 bg-background-dark/30 group-hover/card:bg-background-dark/50 group-hover/card:border-rose-500/30 transition-all duration-300 cursor-pointer">
+                                <div class="size-16 rounded-full bg-surface-dark border border-border-dark flex items-center justify-center mb-2 group-hover/card:scale-110 transition-transform duration-300 group-hover/card:border-rose-500/30">
+                                    <span class="material-symbols-outlined text-text-secondary text-[32px] group-hover/card:text-rose-500 transition-colors">add_a_photo</span>
+                                </div>
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium mb-1">Drop OD fundus image here</p>
+                                    <p class="text-text-secondary text-sm">or click to browse files</p>
+                                </div>
+                                <button class="mt-2 px-6 py-2 bg-surface-dark border border-border-dark hover:bg-rose-500 hover:text-white hover:border-rose-500 text-text-secondary text-sm font-bold rounded-full transition-all duration-200" onclick="document.getElementById('rightEyeInput').click()">
+                                    Select File
+                                </button>
+                                <input type="file" id="rightEyeInput" class="hidden" accept="image/jpeg,image/png" onchange="handleFileSelect(event, 'right')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-xl bg-primary/5 border border-primary/20 p-4 flex items-start gap-3">
+                    <span class="material-symbols-outlined text-primary shrink-0 mt-0.5">info</span>
+                    <div>
+                        <p class="text-white text-sm font-bold">Image Quality Requirement</p>
+                        <p class="text-text-secondary text-sm mt-1">For accurate AI prediction, ensure the optic disc and macula are clearly visible. Images with significant glare or blur will be rejected.</p>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-4 pb-8">
+                    <button class="group w-full max-w-md h-14 bg-primary hover:bg-blue-600 active:scale-[0.98] rounded-full flex items-center justify-center gap-3 transition-all duration-200 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]" onclick="uploadImages()">
+                        <span class="material-symbols-outlined text-white group-hover:animate-pulse">auto_awesome</span>
+                        <span class="text-white font-bold text-lg tracking-tight">Run AI Analysis</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Client-side navigation
+        function navigateTo(page) {
+            window.location.href = `/${page}`;
+        }
+
+        // Store selected files
+        let selectedFiles = {
+            left: null,
+            right: null
+        };
+
+        // Handle file selection
+        function handleFileSelect(event, eye) {
+            const file = event.target.files[0];
+            if (file) {
+                // Validate file type
+                if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                    alert('Please select a JPEG or PNG image');
+                    return;
+                }
+
+                // Validate file size (max 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size exceeds 10MB limit');
+                    return;
+                }
+
+                selectedFiles[eye] = file;
+                console.log(`${eye} eye image selected:`, file.name);
+                
+                // Update UI to show file selected
+                const button = event.target.previousElementSibling;
+                button.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                button.classList.add('text-primary');
+            }
+        }
+
+        // Upload images to backend
+        async function uploadImages() {
+            // Check if at least one image is selected
+            if (!selectedFiles.left && !selectedFiles.right) {
+                alert('Please select at least one image to analyze');
+                return;
+            }
+
+            // Show loading state
+            const uploadButton = document.querySelector('button[onclick="uploadImages()"]');
+            const originalText = uploadButton.innerHTML;
+            uploadButton.innerHTML = '<span class="material-symbols-outlined text-white animate-spin">progress_activity</span><span class="text-white font-bold text-lg tracking-tight">Analyzing...</span>';
+            uploadButton.disabled = true;
+
+            try {
+                // Create FormData to send files
+                const formData = new FormData();
+                
+                if (selectedFiles.left) {
+                    formData.append('left_eye_image', selectedFiles.left);
+                }
+                
+                if (selectedFiles.right) {
+                    formData.append('right_eye_image', selectedFiles.right);
+                }
+
+                // Simulate API call delay (in real app, replace with actual fetch)
+                console.log('Sending image(s) to backend:', {
+                    left: selectedFiles.left ? selectedFiles.left.name : null,
+                    right: selectedFiles.right ? selectedFiles.right.name : null
+                });
+
+                // Simulate API call delay (in real app, replace with actual fetch)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Simulate successful response
+                const mockResponse = {
+                    diagnosis: "Early signs of diabetic retinopathy detected in left eye",
+                    confidence: 87,
+                    recommendations: ["Schedule follow-up in 3 months", "Monitor blood sugar levels"],
+                    risk_level: "moderate"
+                };
+
+                // Navigate to analysis results page
+                setTimeout(() => {
+                    navigateTo('analysis');
+                }, 500);
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Error uploading images: ' + error.message);
+                
+                // Reset button state
+                uploadButton.innerHTML = originalText;
+                uploadButton.disabled = false;
+            }
+        }
+
+        // Drag and drop functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                document.addEventListener(eventName, preventDefaults, false);
+                document.querySelector('.grid').addEventListener(eventName, preventDefaults, false);
+            });
+
+            // Highlight drop area when item is dragged over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                document.querySelector('.grid').addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                document.querySelector('.grid').addEventListener(eventName, unhighlight, false);
+            });
+
+            // Handle dropped files
+            document.querySelector('.grid').addEventListener('drop', handleDrop, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            const targetCard = e.target.closest('.group\\/card');
+            if (targetCard) {
+                targetCard.classList.add('border-primary/50');
+            }
+        }
+
+        function unhighlight(e) {
+            const targetCard = e.target.closest('.group\\/card');
+            if (targetCard) {
+                targetCard.classList.remove('border-primary/50');
+            }
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            // Determine which card the file was dropped on
+            const card = e.target.closest('.group\\/card');
+            if (card) {
+                const isLeftEye = card.querySelector('span').textContent.includes('Left') || 
+                                 card.querySelector('span').textContent.includes('OS');
+                
+                // Create a fake event to handle the file
+                const fakeEvent = { target: { files } };
+                handleFileSelect(fakeEvent, isLeftEye ? 'left' : 'right');
+            }
+        }
+    </script>
+</body>
+</html>
