@@ -8,18 +8,15 @@ from dotenv import load_dotenv
 from supabase import create_client, Client
 from fastapi import Body
 
-# Try to import your wrapper. If it fails, app will still start but endpoint will raise clear error.
 try:
     from retinova_cli import RetiNovaCLI as WrapperClass
 except Exception as e:
     WrapperClass = None
     wrapper_import_error = e
 
-# ----- logging -----
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("retina_app")
 
-# ----- load env -----
 load_dotenv() 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -33,7 +30,6 @@ if not SUPABASE_URL or not SUPABASE_KEY:
 # Create supabase client (server side)
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# ----- FastAPI app -----
 app = FastAPI(title="Retina (7-disease) API")
 app.add_middleware(
     CORSMiddleware,
@@ -43,13 +39,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ----- local folders -----
 UPLOAD_FOLDER = "uploads"
 MODEL_FOLDER = "models"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(MODEL_FOLDER, exist_ok=True)
 
-# ----- helper wrappers for supabase responses -----
 def _raise_if_response_error(resp, context: str = ""):
     if getattr(resp, "error", None):
         raise RuntimeError(f"{context} error: {resp.error}")
@@ -58,7 +52,6 @@ def _signed_url_from_bucket(bucket: str, path: str, expires_sec: int = 3600):
     resp = supabase.storage.from_(bucket).create_signed_url(path, expires_sec)
     _raise_if_response_error(resp, f"create_signed_url({bucket}/{path})")
 
-    # ✅ storage3 returns dict, NOT .data
     if isinstance(resp, dict):
         return resp.get("signedURL")
  
@@ -81,7 +74,6 @@ def _get_inserted_id(inserted_rows, preferred_names=("id", "image_id", "retina_i
     for n in preferred_names:
         if n in row:
             return row[n]
-    # fallback to first column
     return next(iter(row.values()))
 
 def _file_url_to_path(url: str | None):
@@ -92,21 +84,18 @@ def _file_url_to_path(url: str | None):
     if not url:
         return None
 
-    # file:///C:/Users/...  (3 slashes)
     if url.startswith("file:///"):
         path = url[len("file:///"):]
-    # file://C:/Users/...   (2 slashes)
+
     elif url.startswith("file://"):
         path = url[len("file://"):]
     else:
-        # already a path, just use it
+
         path = url
 
-    # Normalize slashes for Windows
     return os.path.normpath(path)
 
 
-# ----- model / pipeline (lazy load) -----
 LOCAL_MODEL_PATH = os.path.join(MODEL_FOLDER, "retinova_model.h5")
 pipeline = None
 
@@ -129,19 +118,17 @@ def get_pipeline():
     log.info("Initializing wrapper with model: %s", LOCAL_MODEL_PATH)
     loaded = WrapperClass(model_path=LOCAL_MODEL_PATH)
 
-    # --- OVERRIDE: no interactive MCQs in API ---
     def noninteractive_ask(condition, base_conf):
         # skip asking questions, just keep base confidence as final
         return float(base_conf), {}
 
     loaded.ask_risk_questions = noninteractive_ask
-    # --------------------------------------------
 
     log.info("Wrapper initialized successfully (non-interactive).")
     pipeline = loaded
     return pipeline
 
-# ----- health check -----
+
 @app.get("/ping")
 def ping():
     return {"status": "ok"}
@@ -213,25 +200,24 @@ def login_user(
         "user_id": user["user_id"],
         "user_email": user["user_email"]
     }
-# ----- main endpoint -----
+
 @app.post("/upload-and-process")
 async def upload_and_process(
     file: UploadFile = File(...),
     user_email: str = Form(...),
     user_id: str = Form(None),
 ):
-    # Basic MIME validation
+
     if file.content_type not in ("image/jpeg", "image/png"):
         raise HTTPException(status_code=400, detail="Only JPEG/PNG images allowed.")
 
-    # Ensure pipeline available (lazy init)
+
     try:
         pipeline_instance = get_pipeline()
     except Exception as e:
         log.exception("Pipeline initialization failed: %s", e)
         raise HTTPException(status_code=500, detail=f"Model pipeline error: {e}")
 
-    # Save input file locally
     ext = (file.filename or "image").split(".")[-1]
     local_input_name = f"{uuid.uuid4()}.{ext}"
     local_input_path = os.path.join(UPLOAD_FOLDER, local_input_name)
@@ -258,7 +244,7 @@ async def upload_and_process(
     or wrapper_result.get("prediction_confidence")
 )
 
-        # Upload original image to user-images bucket (private)
+       
         bucket_image_name = f"{uuid.uuid4()}.{ext}"
         _upload_bytes_to_bucket(
             BUCKET_USER_IMAGES, bucket_image_name, content_bytes, content_type=file.content_type
@@ -267,7 +253,7 @@ async def upload_and_process(
             BUCKET_USER_IMAGES, bucket_image_name, expires_sec=24 * 3600
         )
 
-        # Upload GradCAM and Heatmap if wrapper provided local paths
+        
         grad_link = wrapper_result.get("gradcam_overlay") or wrapper_result.get("gradcam_overlay_path")
         heat_link = wrapper_result.get("gradcam_heatmap") or wrapper_result.get("gradcam_heatmap_path")
 
@@ -309,17 +295,15 @@ async def upload_and_process(
         else:
             log.info("No heatmap produced or file missing: %s", heat_path)
 
-# ---------------- JSON RESULTS BUILD ----------------
         import json
 
         json_payload = wrapper_result.copy()
 
-        # Replace local paths with Supabase URLs
         json_payload["image_url"] = main_signed
         json_payload["gradcam_url"] = gradcam_signed
         json_payload["heatmap_url"] = heatmap_signed
 
-        # Remove local-only paths (VERY IMPORTANT)
+
         for k in [
             "input_path",
             "gradcam_overlay_path",
@@ -328,10 +312,7 @@ async def upload_and_process(
             json_payload.pop(k, None)
 
         json_bytes = json.dumps(json_payload, indent=2).encode("utf-8")
-        # ----------------------------------------------------
 
-
-        # ---------------- JSON RESULTS UPLOAD ----------------
         json_signed = None
         jname = f"{uuid.uuid4()}_results.json"
 
@@ -339,7 +320,7 @@ async def upload_and_process(
             "results",                # bucket name
             jname,
             json_bytes,
-            content_type="application/octet-stream" # ✅ FIXED MIME TYPE
+            content_type="application/octet-stream" 
         )
 
         json_signed = _signed_url_from_bucket(
@@ -349,12 +330,11 @@ async def upload_and_process(
         )
 
         log.info("Uploaded JSON results -> %s", jname)
-        # ----------------------------------------------------
 
         log.info("FINAL URL CHECK -> image=%s grad=%s heat=%s",
          main_signed, gradcam_signed, heatmap_signed)
 
-        # Insert retina_images row
+
         retina_payload = {
             "user_id":user_id,
             "user_email": user_email,
@@ -363,7 +343,6 @@ async def upload_and_process(
             "gradcam_url":gradcam_signed,
             "heatmap_url":heatmap_signed,
             
-    # uploaded_at will be set automatically by default now()
 }
         inserted_retina = _insert_table("retina_images", retina_payload)
         image_id = _get_inserted_id(inserted_retina)
@@ -402,10 +381,10 @@ async def upload_and_process(
 }
         _insert_table("results", results_payload)
 
-        # Insert MCQ responses if present
+
         mcq_list=[]
 
-        # Build response
+    
         return {
             "message": "Processed successfully",
             "image_id": image_id,
@@ -427,14 +406,14 @@ async def upload_and_process(
                 os.remove(local_input_path)
         except Exception:
             pass
-# ================= MCQ — FETCH QUESTIONS =================
+
 @app.get("/mcq/questions/{image_id}")
 def get_mcq_questions(image_id: str):
     """
     Returns the MCQ questions for the disease predicted for this image.
     """
 
-    # 1) Look up prediction
+
     pred_row = (
         supabase.table("predictions")
         .select("*")
@@ -449,7 +428,7 @@ def get_mcq_questions(image_id: str):
 
     disease = pred_row.data[0].get("disease")
 
-    # 2) Pull question bank
+
     pipeline_instance = get_pipeline()
     risk_bank = getattr(pipeline_instance, "risk_questions", {})
 
@@ -461,7 +440,7 @@ def get_mcq_questions(image_id: str):
         or []
     )
 
-    # ✅ DEBUG LOG
+
     log.info(
         "MCQ FETCH → image_id=%s disease=%s questions=%d",
         image_id, disease, len(questions)
@@ -503,7 +482,7 @@ def submit_mcq_answers(payload: dict = Body(...)):
             detail="image_id and answers[] are required"
         )
 
-    # ---- fetch latest prediction for base confidence ----
+
     pred = (
         supabase.table("predictions")
         .select("*")
@@ -519,7 +498,7 @@ def submit_mcq_answers(payload: dict = Body(...)):
             detail="No prediction found for image_id"
         )
 
-    # ✅ SAFE BASE CONFIDENCE FALLBACK
+
     base_conf = float(
         pred.data[0].get("base_confidence")
         or pred.data[0].get("model_confidence")
@@ -528,7 +507,7 @@ def submit_mcq_answers(payload: dict = Body(...)):
         or 0
     )
 
-    # 🔐 normalize confidence if stored as percentage
+
     if base_conf > 1:
         base_conf = base_conf / 100
 
@@ -539,7 +518,7 @@ def submit_mcq_answers(payload: dict = Body(...)):
         image_id, base_conf, final_conf, len(answers)
     )
 
-    # ---- confidence bump rule ----
+
     CONF_BUMPS = {
         0: 0.00,
         1: 0.05,
@@ -569,13 +548,13 @@ def submit_mcq_answers(payload: dict = Body(...)):
         supabase.table("mcq_responses").insert(row).execute()
         rows_inserted += 1
 
-    # ---- update predictions ----
+
     supabase.table("predictions").update({
         "final_confidence": final_conf,
         "combined_confidence": final_conf
     }).eq("image_id", image_id).execute()
 
-    # ---- update results ----
+
     supabase.table("results").update({
         "final_confidence": final_conf,
         "combined_confidence": final_conf,
