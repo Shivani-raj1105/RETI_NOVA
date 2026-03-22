@@ -15,8 +15,6 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . .
-
-# Expose port for Render
 ENV PORT=10000
 EXPOSE 10000
 
