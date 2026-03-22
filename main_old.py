@@ -213,7 +213,6 @@ async def upload_and_process(
         image_id = _get_inserted_id(inserted_retina)
         log.info("Inserted retina_images row id=%s", image_id)
 
-        # Insert prediction row
         prediction_payload = {
             "image_id": image_id,
             "user_id": user_id,
@@ -264,7 +263,6 @@ async def upload_and_process(
         raise HTTPException(status_code=500, detail=str(exc))
 
     finally:
-        # remove uploaded input image from disk to save space
         try:
             if os.path.exists(local_input_path):
                 os.remove(local_input_path)
