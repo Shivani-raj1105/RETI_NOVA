@@ -27,7 +27,6 @@ BUCKET_HEATMAP = os.getenv("BUCKET_HEATMAP", "heatmaps")
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise RuntimeError("SUPABASE_URL or SUPABASE_KEY missing in .env")
 
-# Create supabase client (server side)
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = FastAPI(title="Retina (7-disease) API")
@@ -77,10 +76,7 @@ def _get_inserted_id(inserted_rows, preferred_names=("id", "image_id", "retina_i
     return next(iter(row.values()))
 
 def _file_url_to_path(url: str | None):
-    """
-    Convert file:///C:/... style URL from the wrapper JSON
-    into a normal Windows path C:\\... so os.path.exists works.
-    """
+
     if not url:
         return None
 
@@ -100,10 +96,7 @@ LOCAL_MODEL_PATH = os.path.join(MODEL_FOLDER, "retinova_model.h5")
 pipeline = None
 
 def get_pipeline():
-    """
-    Lazily initialize the model pipeline when first needed.
-    For API use, we override ask_risk_questions to avoid terminal input().
-    """
+
     global pipeline
 
     if pipeline is not None:
@@ -119,7 +112,6 @@ def get_pipeline():
     loaded = WrapperClass(model_path=LOCAL_MODEL_PATH)
 
     def noninteractive_ask(condition, base_conf):
-        # skip asking questions, just keep base confidence as final
         return float(base_conf), {}
 
     loaded.ask_risk_questions = noninteractive_ask
@@ -139,10 +131,6 @@ def register_user(
     user_id: str = Body(...),
     user_email: str = Body(...)
 ):
-    """
-    Creates a simple user record (no password).
-    Frontend must reuse this same user_id everywhere.
-    """
 
     payload = {
         "user_id": user_id,
@@ -169,9 +157,7 @@ def login_user(
     user_id: str = Body(None),
     user_email: str = Body(None)
 ):
-    """
-    Login = existence check only.
-    """
+
 
     if not user_id and not user_email:
         raise HTTPException(
@@ -227,7 +213,6 @@ async def upload_and_process(
     log.info("Saved input image to %s", local_input_path)
 
     try:
-        # Run wrapper (must return dict)
         log.info("Running wrapper on %s", local_input_path)
         wrapper_result = pipeline_instance.run_with_path(local_input_path)
         log.debug("Wrapper result keys: %s", list(wrapper_result.keys()))
@@ -317,7 +302,7 @@ async def upload_and_process(
         jname = f"{uuid.uuid4()}_results.json"
 
         _upload_bytes_to_bucket(
-            "results",                # bucket name
+            "results",               
             jname,
             json_bytes,
             content_type="application/octet-stream" 
@@ -357,11 +342,11 @@ async def upload_and_process(
     "image_id": image_id,
     "user_id": user_id,
     "disease": prediction,
-    "probability": confidence,          # legacy field
-    "base_confidence": confidence,      # CNN only
-    "model_confidence": confidence,     # CNN only
-    "final_confidence": confidence,     # same before MCQ
-    "combined_confidence": confidence   # alias of final
+    "probability": confidence,  
+    "base_confidence": confidence,  
+    "model_confidence": confidence,  
+    "final_confidence": confidence,    
+    "combined_confidence": confidence  
 }
         _insert_table("predictions", prediction_payload)
 
@@ -409,9 +394,6 @@ async def upload_and_process(
 
 @app.get("/mcq/questions/{image_id}")
 def get_mcq_questions(image_id: str):
-    """
-    Returns the MCQ questions for the disease predicted for this image.
-    """
 
 
     pred_row = (
