@@ -1,21 +1,15 @@
-# Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Virtual environment
 venv/
 
-# Local uploads
 uploads/
 uploads/*.png
 uploads/*.jpg
 uploads/*.jpeg
 
-# Env files
 .env
 .env.local
-
-# Logs
 *.log
