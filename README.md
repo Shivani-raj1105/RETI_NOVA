@@ -51,6 +51,22 @@ RetiNova is an innovative AI-powered platform that converts a single retinal ima
 - **Real-time Results**: Instant display of AI analysis outcomes
 - **Interactive Visualizations**: Heatmaps and detailed analysis overlays
 
+  
+## Results & Evaluation
+
+### Per-Class Accuracy
+
+| Class                         | Accuracy |
+|--------------------------------|----------|
+| AMD                            | 96.81%   |
+| Diabetic Retinopathy (DR)      | 100.00%  |
+| Glaucoma                       | 98.20%   |
+| Hypertensive Retinopathy       | 97.39%   |
+| Normal                         | 0.20%    |
+| Optical Neuropathy             | 95.79%   |
+| Retinal Vein Occlusion (RVO)   | 91.46%   |
+| Retinal Tears / Detachments    | 99.17%   |
+
 ##  Tech Stack
 
 ### Frontend
