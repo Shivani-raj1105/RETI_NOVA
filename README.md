@@ -3,247 +3,382 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Frontend: HTML/CSS/JS](https://img.shields.io/badge/Frontend-HTML/CSS/JS-blue)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![Server: Node.js](https://img.shields.io/badge/Server-Node.js-green)](https://nodejs.org/)
-[![Framework: Express](https://img.shields.io/badge/Framework-Express.js-orange)](https://expressjs.com/)
+[![Frontend: HTML/CSS/JS](https://img.shields.io/badge/Frontend-HTML/CSS/JS-blue.svg)
+[![Server: Node.js](https://img.shields.io/badge/Server-Node.js-green.svg)]
+[![Framework: Express.js](https://img.shields.io/badge/Framework-Express.js-orange.svg)]
 
 </div>
 
 <div align="center">
-  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4IUmN-cKD6ubDchWZ1jzo7UVNK2hWhBbMsDWZhTQ0KEDoKfhMwHNPRmTa4dsy3XxR0ijYOOb5VamQBV1dvNjIk9RbJLznkPB0ORPtSHid7ivoJymrj4uWF9IwJkfrmht0TH5mSlK6IFh5J6D1lwAt3V8Tv2V1amcNm_IH4kNTPORjAjSPoSeIJEFDp6dvkiO4eRcXdx921DxVXzJCPSohoTrwkJuFiNYnRi5IiqtcI4L3nxIKltQTgZrUrZQEizCEkmUCf4i7bnHv" alt="RetiNova Platform" width="400"/>
-</div>
+<img src="YOUR_IMAGE_LINK" width="400">
 
-<div align="center">
-  <h3>Your retina knows more than you think.</h3>
-  <p>Advanced AI platform for early detection of eye and systemic diseases through retinal imaging analysis</p>
+### Your retina knows more than you think.
+
+AI-assisted retinal image analysis for early ocular and systemic disease risk assessment.
+
 </div>
 
 ---
 
-##  Overview
+# Overview
 
-RetiNova is an innovative AI-powered platform that converts a single retinal image into early, actionable insights on eye and systemic diseases. It enables fast, non-invasive screening at clinical scale, helping healthcare providers identify potential health risks before they become critical.
+RetiNova is a computer vision and healthcare AI project that explores the use of retinal fundus images for disease screening and risk assessment.
 
-##  Key Features
+The platform combines deep learning models with a browser-based clinical workflow to support:
 
-- **Advanced AI Analysis**: Leverages state-of-the-art deep learning models for accurate disease detection
-- **Real-time Processing**: Fast image analysis with immediate risk assessment
-- **Comprehensive Reporting**: Detailed clinical reports with actionable recommendations
-- **Clinician Dashboard**: Intuitive interface for healthcare professionals
-- **Multi-disease Detection**: Identifies various retinal and systemic conditions
-- **Genetic Risk Correlation**: Simulated polygenic risk scoring for enhanced predictions
+* retinal image upload
+* automated image preprocessing
+* CNN-based disease prediction
+* simulated polygenic risk integration
+* clinician-oriented visualization
+* structured patient risk reporting
 
-##  Technical Architecture
+The project aims to demonstrate how retinal imaging and machine learning can be integrated into accessible decision-support systems.
 
-### Backend Infrastructure
-- **Scalable Inference System**: Modular backend for retinal image–based disease risk prediction
-- **End-to-End Pipelines**: Complete workflows for image ingestion, preprocessing, model execution, and response serialization
-- **Cloud Deployment**: Scalable infrastructure for concurrent inference handling
-- **CNN Architectures**: Implementation of ResNet, DenseNet, and EfficientNet for feature extraction
-- **Performance Optimization**: 30–40% reduction in inference latency through batching and pipeline optimization
-- **Genetic Analysis**: TensorFlow-based polygenic risk score (PRS) simulation for genotype–phenotype associations
-- **Predictive Performance**: AUC > 0.96 across multiple retinal disease detection tasks
+---
 
-### Frontend Components
-- **Responsive UI**: Modern interface built with HTML, CSS, and vanilla JavaScript
-- **Client-side Navigation**: Seamless page transitions without full page reloads
-- **Image Upload**: Drag-and-drop functionality with validation
-- **Real-time Results**: Instant display of AI analysis outcomes
-- **Interactive Visualizations**: Heatmaps and detailed analysis overlays
+# System Architecture
 
-  
-## Results & Evaluation
+```
+Retinal Fundus Image
 
-### Per-Class Accuracy
+        │
 
-| Class                         | Accuracy |
-|--------------------------------|----------|
-| AMD                            | 96.81%   |
-| Diabetic Retinopathy (DR)      | 100.00%  |
-| Glaucoma                       | 98.20%   |
-| Hypertensive Retinopathy       | 97.39%   |
-| Normal                         | 0.20%    |
-| Optical Neuropathy             | 95.79%   |
-| Retinal Vein Occlusion (RVO)   | 91.46%   |
-| Retinal Tears / Detachments    | 99.17%   |
+        ▼
 
-##  Tech Stack
+Image Validation
 
-### Frontend
-- **HTML5** - Semantic markup and structure
-- **CSS3** - Styling with Tailwind CSS framework
-- **JavaScript (ES6+)** - Client-side logic and interactivity
-- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
-- **Google Fonts** - Professional typography
-- **Material Icons** - Consistent iconography
+        │
 
-### Backend & Infrastructure
-- **Node.js** - Runtime environment
-- **Express.js** - Web application framework
-- **TensorFlow.js** - Machine learning in JavaScript
-- **Cloud Services** - Scalable deployment infrastructure
+        ▼
 
-##  Core Capabilities
+Image Preprocessing
 
-### AI-Powered Analysis
-- **Image Processing**: Advanced preprocessing pipelines for retinal images
-- **Feature Extraction**: CNN-based analysis using ResNet, DenseNet, and EfficientNet
-- **Risk Assessment**: Multi-parameter risk scoring algorithms
-- **Disease Detection**: Identification of diabetic retinopathy, glaucoma, and other conditions
+        │
 
-### Clinical Integration
-- **Dashboard Interface**: Comprehensive clinician workspace
-- **Patient Management**: Secure patient data handling
-- **Report Generation**: Professional clinical reports
-- **Recommendation Engine**: Evidence-based clinical recommendations
+        ▼
 
-##  Getting Started
+CNN Feature Extraction
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+        │
 
-### Installation
+        ▼
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/retinova.git
+Disease Prediction
+
+        │
+
+        ▼
+
+PRS-Based Risk Correlation
+
+        │
+
+        ▼
+
+Risk Report Generation
+
+        │
+
+        ▼
+
+Clinician Dashboard
 ```
 
-2. Navigate to the project directory:
-```bash
+---
+
+# Features
+
+* Retinal image upload and validation
+
+* CNN-based disease prediction
+
+* Multi-condition screening
+
+* Simulated Polygenic Risk Score integration
+
+* Clinician dashboard
+
+* Structured patient risk reports
+
+* Interactive browser interface
+
+* Modular backend architecture
+
+---
+
+# AI Pipeline
+
+The inference workflow consists of:
+
+## 1. Image Acquisition
+
+Retinal fundus images are uploaded through the web interface.
+
+## 2. Image Processing
+
+Input images undergo preprocessing and normalization.
+
+## 3. Feature Extraction
+
+Deep convolutional neural networks extract retinal features.
+
+Architectures explored include:
+
+* ResNet
+
+* DenseNet
+
+* EfficientNet
+
+## 4. Disease Prediction
+
+Extracted features are used for multi-condition prediction.
+
+## 5. Genetic Correlation
+
+Simulated Polygenic Risk Score information is incorporated for exploratory genotype-phenotype analysis.
+
+## 6. Risk Reporting
+
+Predictions are aggregated into clinician-friendly outputs.
+
+---
+
+# Diseases Covered
+
+Current disease categories include:
+
+| Condition                        |
+| -------------------------------- |
+| Age-related Macular Degeneration |
+| Diabetic Retinopathy             |
+| Glaucoma                         |
+| Hypertensive Retinopathy         |
+| Optical Neuropathy               |
+| Retinal Vein Occlusion           |
+| Retinal Tears / Detachments      |
+| Normal Retina                    |
+
+---
+
+# Results
+
+## Per-Class Accuracy
+
+| Class                       | Accuracy |
+| --------------------------- | -------- |
+| AMD                         | 96.81%   |
+| Diabetic Retinopathy        | 100.00%  |
+| Glaucoma                    | 98.20%   |
+| Hypertensive Retinopathy    | 97.39%   |
+| Normal                      | 0.20%    |
+| Optical Neuropathy          | 95.79%   |
+| Retinal Vein Occlusion      | 91.46%   |
+| Retinal Tears / Detachments | 99.17%   |
+
+The above results were obtained during experimental evaluation of the classification pipeline and are intended for research purposes.
+
+---
+
+# Technology Stack
+
+| Layer            | Technology                            |
+| ---------------- | ------------------------------------- |
+| Frontend         | HTML5, CSS3, Tailwind CSS, JavaScript |
+| Backend          | Node.js, Express.js                   |
+| Machine Learning | TensorFlow.js                         |
+| Deep Learning    | ResNet, DenseNet, EfficientNet        |
+| Risk Analysis    | Simulated PRS Integration             |
+| Deployment       | Browser-based demonstration           |
+
+---
+
+# Web Application
+
+The platform provides:
+
+## Authentication
+
+* Login
+
+* Registration
+
+* User workflow
+
+## Dashboard
+
+* Patient overview
+
+* AI predictions
+
+* Risk summaries
+
+## Image Upload
+
+* Retinal image submission
+
+* Validation
+
+* Processing
+
+## Results
+
+* Disease predictions
+
+* Risk visualization
+
+* Clinical recommendations
+
+* Printable reports
+
+---
+
+# Backend Design
+
+The backend is implemented using Node.js and Express.js.
+
+Core responsibilities include:
+
+* request handling
+
+* image ingestion
+
+* inference workflow coordination
+
+* response generation
+
+* dashboard integration
+
+The architecture is modular to support future expansion of inference capabilities.
+
+---
+
+# Project Structure
+
+```
+retinova/
+
+├── login/
+├── dashboard/
+├── upload/
+├── analysis/
+├── recommendations/
+├── reports/
+
+├── server.js
+
+├── package.json
+
+└── README.md
+```
+
+---
+
+# Running Locally
+
+## Requirements
+
+* Node.js
+
+* npm
+
+## Installation
+
+```
+git clone <repository>
+
 cd retinova
-```
 
-3. Install dependencies:
-```bash
 npm install
-```
 
-4. Start the development server:
-```bash
 npm start
 ```
 
-5. Open your browser and navigate to:
+Open:
+
 ```
 http://localhost:3000
 ```
 
-### Available Routes
-- `http://localhost:3000/` - Main login page (redirects to login)
-- `http://localhost:3000/login` - User authentication
-- `http://localhost:3000/register` - Account registration
-- `http://localhost:3000/dashboard` - Clinician dashboard
-- `http://localhost:3000/upload` - Image upload and analysis
-- `http://localhost:3000/analysis` - AI analysis results
-- `http://localhost:3000/recommendations` - Clinical recommendations
-- `http://localhost:3000/report` - Patient risk reports
+---
 
-##  Project Structure
+# Current Status
 
-```
-retinova/
-├── ai_analysis_&_risk_results/
-├── clinical_recommendations_&_follow-up/
-├── clinician_dashboard_overview/
-├── image_upload_&_metadata_entry/
-├── printable_patient_risk_report/
-├── retinova_login_&_gateway_1/
-├── retinova_login_&_gateway_2/
-├── retinova_login_&_gateway_3/
-├── server.js                 # Express server configuration
-├── package.json             # Project dependencies
-└── README.md               # This file
-```
+Implemented:
 
-##  UI Components
+* Frontend workflow
 
-### Authentication Flow
-- **Login Page**: Secure access to the platform
-- **Registration**: User account creation with validation
-- **Password Recovery**: Account recovery options
+* Node.js backend
 
-### Dashboard Features
-- **Patient Overview**: Quick access to patient information
-- **Analysis History**: Previous scan results and trends
-- **Risk Monitoring**: Real-time risk assessment tracking
+* CNN integration
 
-### Image Analysis
-- **Upload Interface**: Drag-and-drop image upload
-- **Quality Assessment**: Automatic image quality validation
-- **Analysis Results**: Detailed AI-generated insights
-- **Visualization**: Heatmaps and feature highlighting
+* Simulated PRS integration
 
-##  Technical Implementation
+* Dashboard
 
-### Backend Architecture
-- **Scalable Inference System**: Modular backend inference system for retinal image–based disease risk prediction
-- **End-to-End Pipelines**: Complete pipelines for image ingestion, preprocessing, model execution, and response serialization
-- **Cloud Deployment**: Cloud-based deployment for scalable experimentation and concurrent inference handling
-- **CNN Feature Extraction**: CNN-based feature extraction using ResNet, DenseNet, and EfficientNet architectures
-- **Performance Optimization**: 30–40% reduction in inference latency through batching, pipeline optimization, and model tuning
-- **Genetic Correlation**: Simulated polygenic risk score (PRS) genetic correlations using TensorFlow to study genotype–phenotype associations
-- **Predictive Performance**: Improved predictive performance with AUC > 0.96 across multiple retinal disease detection tasks
+* Reporting pipeline
 
-### Frontend Architecture
-- **Client-side Navigation**: Single-page application navigation
-- **State Management**: Client-side state handling
-- **Form Validation**: Comprehensive input validation
-- **File Handling**: Image upload and processing
-- **API Integration**: Seamless backend communication
+* Browser-based demonstration
 
-##  Performance Metrics
+Under active development:
 
-- **Inference Latency**: 30-40% reduction through optimization
-- **Predictive Accuracy**: AUC > 0.96 across multiple tasks
-- **Scalability**: Concurrent processing capabilities
-- **Response Time**: Real-time analysis results
+* Expanded live inference capabilities
 
-##  Testing & Validation
+* Larger datasets
 
-- **Unit Testing**: Comprehensive test coverage
-- **Integration Testing**: End-to-end workflow validation
-- **Performance Testing**: Load and stress testing
-- **Accuracy Validation**: Clinical validation studies
+* Additional retinal conditions
 
-##  Security & Privacy
+* Improved multimodal fusion
 
-- **Data Encryption**: End-to-end encryption for patient data
-- **Access Control**: Role-based access management
-- **Compliance**: HIPAA and GDPR compliance measures
-- **Audit Logging**: Comprehensive activity tracking
+---
 
-##  Deployment
+# Current Limitations
 
-### Production Setup
-```bash
-# Install dependencies
-npm install --production
+* Intended for research and educational use.
 
-# Start production server
-npm run start
-```
+* Predictions are not clinical diagnoses.
 
-### Environment Configuration
-- Port configuration (default: 3000)
-- SSL/TLS certificates
-- Database connections
-- API keys and secrets
+* Performance depends on image quality and dataset diversity.
 
-##  Contributing
+* Additional validation across larger datasets is required.
 
-We welcome contributions to the RetiNova project! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more details.
+---
 
-##  License
+# Future Work
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+* Real-time inference improvements
 
- for various libraries and tools used
+* Explainable AI visualizations
+
+* Expanded multimodal learning
+
+* Enhanced PRS integration
+
+* Larger validation datasets
+
+* Mobile screening workflows
+
+---
+
+# Contributing
+
+Contributions and suggestions are welcome.
+
+Feel free to open issues or submit pull requests.
+
+---
+
+# License
+
+This project is licensed under the MIT License.
 
 ---
 
 <div align="center">
-  <p><strong>RetiNova</strong> - Advancing healthcare through AI-powered retinal analysis</p>
-  <p>© 2026 RetiNova Labs. All rights reserved.</p>
+
+## RetiNova
+
+### Advancing retinal imaging research through machine learning.
+
 </div>
