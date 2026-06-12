@@ -10,7 +10,7 @@
 </div>
 
 <div align="center">
-<img src="YOUR_IMAGE_LINK" width="400">
+
 
 ### Your retina knows more than you think.
 
